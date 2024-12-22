@@ -44,7 +44,8 @@ IoReadLine *IoReadLine_proto(void *state)
 	rl_initialize();
 	using_history();
 
-	IoState_registerProtoWithFunc_((IoState *)state, self, protoId);
+	// IoState_registerProtoWithFunc_((IoState *)state, self, protoId);
+	IoState_registerProtoWithId_(state, self, protoId);
 
 	IoObject_addMethodTable_(self, methodTable);
 
