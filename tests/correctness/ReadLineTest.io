@@ -13,21 +13,25 @@ ReadLineTest := UnitTest clone do(
 
     testSaveHistoryFile := method(
         historyFilePath := Path with(System temporaryDirectory, "io-new-history")
+        historyFile := File with(historyFilePath)
+        if (historyFile exists, historyFile remove )
+        assertFalse(historyFile exists)
 
         ReadLine addHistory("history line")
         ReadLine saveHistory(historyFilePath)
 
-        historyFile := File with(historyFilePath)
-
         assertTrue(historyFile exists)
         assertEquals("history line", historyFile readLines last)
 
-        historyFile remove
+        // historyFile remove
     )
 
     testCanLoadHistoryFromExistingFile := method(
         historyFilePath := Path with(System temporaryDirectory, "io-existing-history")
         historyFile := File with(historyFilePath)
+        if (historyFile exists, historyFile remove )
+        assertFalse(historyFile exists)
+
         historyFile open
         historyFile write("history line")
         historyFile close
@@ -40,6 +44,6 @@ ReadLineTest := UnitTest clone do(
 
         assertEquals(list("history line", "history line 2"), historyFile readLines)
 
-        historyFile remove
+        // historyFile remove
     )
 )
